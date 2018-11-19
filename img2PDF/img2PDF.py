@@ -18,8 +18,8 @@ def makedir(path):
 def pic2pdf():
     doc = fitz.open()
     #for img in sorted(glob.glob(inputPath+"/*")):  # 读取图片，确保按文件名排序
-    for i in range(1, 19):
-        img = glob.glob(inputPath+str(i)+".png")
+    for i in range(1, 76):
+        img = glob.glob(inputPath+"slide"+str(i)+".jpg")
         print(img)
         imgdoc = fitz.open(img[0])                 # 打开图片
         pdfbytes = imgdoc.convertToPDF()        # 使用图片创建单页的 PDF
@@ -32,6 +32,3 @@ def pic2pdf():
 
 if __name__ == '__main__':
     pic2pdf()
-    # for i in range(1,19):
-    #     img = glob(inputPath+str(i)+".png")
-    #     print(img)

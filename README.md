@@ -15,7 +15,9 @@ Some small tools to make life convenient using python.
 
   ​	Requirements: [PyMuPDF](https://pymupdf.readthedocs.io/en/latest/)
 
-  ​	
+- split and merge
+
+  ​	Refer to https://m.pythontab.com/article/1190
 
 
 
