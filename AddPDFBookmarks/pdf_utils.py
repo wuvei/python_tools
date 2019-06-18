@@ -4,8 +4,8 @@ from PyPDF2 import PdfFileReader as reader,PdfFileWriter as writer
 import os
 
 import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
+# reload(sys)
+# sys.setdefaultencoding('utf-8')
 
 class PDFHandleMode(object):
     '''
@@ -70,7 +70,8 @@ class MyPDFHandler(object):
         :return: None
         '''
         # 为了防止乱码，这里对title进行utf-8编码
-        self.__writeable_pdf.addBookmark(title.decode('utf-8'),page - 1,parent = parent,color = color,fit = fit)
+        # self.__writeable_pdf.addBookmark(title.decode('utf-8'),page - 1,parent = parent,color = color,fit = fit)
+        self.__writeable_pdf.addBookmark(title,page - 1,parent = parent,color = color,fit = fit) # Python 3
         print('add_one_bookmark success! bookmark title is: {0}'.format(title))
 
     def add_bookmarks(self,bookmarks):

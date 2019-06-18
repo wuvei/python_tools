@@ -1,0 +1,311 @@
+本书赞誉 @3
+前言 @5
+目录 Contents @8
+第1章　环境准备 @15
+    1.1　运行环境准备 @16
+        1.1.1　安装JDK @16
+        1.1.2　安装Scala @16
+        1.1.3　安装Spark @17
+    1.2　Spark初体验 @18
+        1.2.1　运行spark-shell @18
+        1.2.2　执行word count @19
+        1.2.3　剖析spark-shell @23
+    1.3　阅读环境准备 @28
+        1.3.1　安装SBT @29
+        1.3.2　安装Git @29
+        1.3.3　安装Eclipse Scala IDE插件 @29
+    1.4　Spark源码编译与调试 @31
+    1.5　小结 @37
+第2章　设计理念与基本架构 @38
+    2.1　初识Spark @39
+        2.1.1　Hadoop MRv1的局限@39
+        2.1.2　Spark的特点 @40
+        2.1.3 Spark使用场景 @42
+    2.2　Spark基础知识 @43
+    2.3　Spark基本设计思想 @45
+        2.3.1　Spark模块设计 @46
+        2.3.2　Spark模型设计 @48
+    2.4　Spark基本架构 @50
+    2.5　小结 @52
+第3章　Spark基础设施 @53
+    3.1　Spark配置 @54
+        3.1.1　系统属性中的配置 @54
+        3.1.2　使用SparkConf配置的API @55
+        3.1.3　克隆SparkConf配置 @56
+    3.2　Spark内置RPC框架 @56
+        3.2.1　RPC配置TransportConf @59
+        3.2.2　RPC客户端工厂Transport- ClientFactory @61
+        3.2.3　RPC服务端TransportServer @67
+        3.2.4　管道初始化 @70
+        3.2.5　TransportChannelHandler详解 @71
+        3.2.6　服务端RpcHandler详解 @77
+        3.2.7　服务端引导程序Transport-ServerBootstrap @82
+        3.2.8　客户端TransportClient详解 @85
+    3.3　事件总线 @92
+        3.3.1　ListenerBus的继承体系 @93
+        3.3.2　SparkListenerBus详解 @94
+        3.3.3　LiveListenerBus详解 @97
+    3.4　度量系统 @101
+        3.4.1　Source继承体系 @101
+        3.4.2　Sink继承体系 @103
+    3.5　小结 @106
+第4章　SparkContext的初始化 @107
+    4.1　SparkContext概述 @108
+    4.2　创建Spark环境 @111
+    4.3　SparkUI的实现 @114
+        4.3.1　SparkUI概述 @114
+        4.3.2　WebUI框架体系 @116
+        4.3.3　创建SparkUI @121
+    4.4　创建心跳接收器 @125
+    4.5　创建和启动调度系统@126
+    4.6　初始化块管理器BlockManager @128
+    4.7　启动度量系统 @128
+    4.8　创建事件日志监听器@129
+    4.9　创建和启动ExecutorAllocation-Manager @130
+    4.10　ContextCleaner的创建与启动 @134
+        4.10.1　创建ContextCleaner @134
+        4.10.2　启动ContextCleaner @134
+    4.11　额外的SparkListener与启动事件总线 @136
+    4.12　Spark环境更新 @137
+    4.13　SparkContext初始化的收尾 @141
+    4.14　SparkContext提供的常用方法 @142
+    4.15　SparkContext的伴生对象@144
+    4.16　小结 @145
+第5章　Spark执行环境 @146
+    5.1　SparkEnv概述 @147
+    5.2　安全管理器SecurityManager @147
+    5.3　RPC环境 @149
+        5.3.1　RPC端点RpcEndpoint @150
+        5.3.2　RPC端点引用RpcEndpointRef @153
+        5.3.3　创建传输上下文TransportConf @156
+        5.3.4　消息调度器Dispatcher @156
+        5.3.5　创建传输上下文Transport-Context @168
+        5.3.6　创建传输客户端工厂Transport-ClientFactory @173
+        5.3.7　创建TransportServer @174
+        5.3.8　客户端请求发送 @176
+        5.3.9　NettyRpcEnv中的常用方法 @187
+    5.4　序列化管理器SerializerManager @189
+    5.5　广播管理器BroadcastManager @192
+    5.6　map任务输出跟踪器 @199
+        5.6.1　MapOutputTracker的实现 @201
+        5.6.2　MapOutputTrackerMaster的实现原理 @205
+    5.7　构建存储体系 @213
+    5.8　创建度量系统 @215
+        5.8.1　MetricsCon?g详解 @217
+        5.8.2　MetricsSystem中的常用方法 @221
+        5.8.3　启动MetricsSystem @223
+    5.9　输出提交协调器 @225
+        5.9.1　OutputCommitCoordinator-Endpoint的实现 @225
+        5.9.2　OutputCommitCoordinator的实现 @226
+        5.9.3　OutputCommitCoordinator的工作原理 @230
+    5.10　创建SparkEnv @231
+    5.11　小结 @231
+第6章　存储体系 @233
+    6.1　存储体系概述 @234
+        6.1.1　存储体系架构 @234
+        6.1.2　基本概念 @236
+    6.2　Block信息管理器 @241
+        6.2.1　Block锁的基本概念 @241
+        6.2.2　Block锁的实现 @243
+    6.3　磁盘Block管理器 @248
+        6.3.1　本地目录结构 @248
+        6.3.2　DiskBlockManager提供的方法 @250
+    6.4　磁盘存储DiskStore @253
+    6.5　内存管理器 @256
+        6.5.1　内存池模型 @257
+        6.5.2　StorageMemoryPool详解 @258
+        6.5.3　MemoryManager模型 @261
+        6.5.4　Uni?edMemoryManager详解 @264
+    6.6　内存存储MemoryStore @266
+        6.6.1　MemoryStore的内存模型 @267
+        6.6.2　MemoryStore提供的方法 @269
+    6.7　块管理器BlockManager @279
+        6.7.1　BlockManager的初始化 @279
+        6.7.2　BlockManager提供的方法 @280
+    6.8　BlockManagerMaster对Block-Manager的管理 @299
+        6.8.1　BlockManagerMaster的职责 @299
+        6.8.2　BlockManagerMasterEndpoint详解 @300
+        6.8.3　BlockManagerSlaveEndpoint详解 @303
+    6.9　Block传输服务 @304
+        6.9.1　初始化NettyBlockTransfer-Service @305
+        6.9.2　NettyBlockRpcServer详解 @306
+        6.9.3　Shuf?e客户端 @310
+    6.10　DiskBlockObjectWriter详解 @319
+    6.11　小结 @322
+第7章　调度系统 @323
+    7.1　调度系统概述 @324
+    7.2　RDD详解 @326
+        7.2.1　为什么需要RDD @326
+        7.2.2　RDD实现的初次分析 @327
+        7.2.3　RDD依赖 @330
+        7.2.4　分区计算器Partitioner@332
+        7.2.5　RDDInfo @334
+    7.3　Stage详解 @335
+        7.3.1　ResultStage的实现 @336
+        7.3.2　Shuf?eMapStage的实现 @337
+        7.3.3　StageInfo @338
+    7.4　面向DAG的调度器DAGScheduler @340
+        7.4.1　JobListener与JobWaiter @340
+        7.4.2　ActiveJob详解 @342
+        7.4.3　DAGSchedulerEventProcessLoop的简要介绍 @342
+        7.4.4　DAGScheduler的组成 @343
+        7.4.5　DAGScheduler提供的常用方法 @344
+        7.4.6　DAGScheduler与Job的提交 @348
+        7.4.7　构建Stage@351
+        7.4.8　提交ResultStage @355
+        7.4.9　提交还未计算的Task @357
+        7.4.10　DAGScheduler的调度流程 @361
+        7.4.11　Task执行结果的处理 @362
+    7.5　调度池Pool @365
+        7.5.1　调度算法 @366
+        7.5.2　Pool的实现 @368
+        7.5.3　调度池构建器 @371
+    7.6　任务集合管理器TaskSetManager @377
+        7.6.1　Task集合 @377
+        7.6.2　TaskSetManager的成员属性 @378
+        7.6.3　调度池与推断执行 @380
+        7.6.4　Task本地性 @384
+        7.6.5　TaskSetManager的常用方法 @387
+    7.7　运行器后端接口LauncherBackend @397
+        7.7.1　BackendConnection的实现 @398
+        7.7.2　LauncherBackend的实现 @400
+    7.8　调度后端接口SchedulerBackend @403
+        7.8.1　SchedulerBackend的定义 @403
+        7.8.2　LocalSchedulerBackend的实现分析 @404
+    7.9　任务结果获取器TaskResultGetter @408
+        7.9.1　处理成功的Task @408
+        7.9.2　处理失败的Task @410
+    7.10　任务调度器TaskScheduler @411
+        7.10.1　TaskSchedulerImpl的属性 @411
+        7.10.2　TaskSchedulerImpl的初始化 @413
+        7.10.3　TaskSchedulerImpl的启动 @413
+        7.10.4　TaskSchedulerImpl与Task的提交 @414
+        7.10.5　TaskSchedulerImpl与资源分配 @416
+        7.10.6　TaskSchedulerImpl的调度流程 @419
+        7.10.7　TaskSchedulerImpl对执行结果的处理 @420
+        7.10.8　TaskSchedulerImpl的常用方法 @423
+    7.11　小结 @426
+第8章　计算引擎 @427
+    8.1　计算引擎概述 @428
+    8.2　内存管理器与执行内存 @431
+        8.2.1　ExecutionMemoryPool详解 @431
+        8.2.2　MemoryManager模型与执行内存 @434
+        8.2.3　Uni?edMemoryManager与执行内存 @435
+    8.3　内存管理器与Tungsten @437
+        8.3.1　MemoryBlock详解 @437
+        8.3.2　MemoryManager模型与Tungsten @439
+        8.3.3　Tungsten的内存分配器 @439
+    8.4　任务内存管理器 @445
+        8.4.1　TaskMemoryManager详解 @445
+        8.4.2　内存消费者 @453
+        8.4.3　执行内存整体架构 @455
+    8.5　Task详解 @457
+        8.5.1　任务上下文TaskContext @457
+        8.5.2　Task的定义 @460
+        8.5.3　Shuf?eMapTask的实现 @463
+        8.5.4　ResultTask的实现 @464
+    8.6　IndexShuf?eBlockResolver详解 @465
+    8.7　采样与估算 @469
+        8.7.1　SizeTracker的实现分析 @469
+        8.7.2　SizeTracker的工作原理 @471
+    8.8　特质WritablePartitionedPair- Collection @472
+    8.9　AppendOnlyMap的实现分析 @474
+        8.9.1　AppendOnlyMap的容量增长 @475
+        8.9.2　AppendOnlyMap的数据更新 @476
+        8.9.3　AppendOnlyMap的缓存聚合算法 @478
+        8.9.4　AppendOnlyMap的内置排序 @480
+        8.9.5　AppendOnlyMap的扩展 @481
+    8.10　PartitionedPairBuffer的实现分析 @483
+        8.10.1　PartitionedPairBuffer的容量增长 @483
+        8.10.2　PartitionedPairBuffer的插入 @484
+        8.10.3　PartitionedPairBuffer的迭代器 @485
+    8.11　外部排序器 @486
+        8.11.1　ExternalSorter详解 @487
+        8.11.2　Shuf?eExternalSorter详解 @501
+    8.12　Shuf?e管理器 @504
+        8.12.1　Shuf?eWriter详解 @505
+        8.12.2　Shuf?eBlockFetcherIterator详解 @516
+        8.12.3　BlockStoreShuf?eReader详解 @524
+        8.12.4　SortShuf?eManager详解 @527
+    8.13　map端与reduce端的Shuf?e组合 @530
+    8.14　小结 @533
+第9章　部署模式 @534
+    9.1　心跳接收器HeartbeatReceiver @535
+    9.2　Executor的实现分析 @541
+        9.2.1　Executor的心跳报告 @542
+        9.2.2　运行Task @544
+    9.3　local部署模式 @549
+    9.4　持久化引擎PersistenceEngine @551
+        9.4.1　基于文件系统的持久化引擎 @553
+        9.4.2　基于ZooKeeper的持久化引擎 @555
+    9.5　领导选举代理 @556
+    9.6　Master详解 @560
+        9.6.1　启动Master @563
+        9.6.2　检查Worker超时@567
+        9.6.3　被选举为领导时的处理 @568
+        9.6.4　一级资源调度 @572
+        9.6.5　注册Worker@582
+        9.6.6　更新Worker的最新状态@584
+        9.6.7　处理Worker的心跳@584
+        9.6.8　注册Application@585
+        9.6.9　处理Executor的申请 @587
+        9.6.10　处理Executor的状态变化 @587
+        9.6.11　Master的常用方法 @588
+    9.7　Worker详解 @592
+        9.7.1　启动Worker@595
+        9.7.2　向Master注册Worker @598
+        9.7.3　向Master发送心跳 @603
+        9.7.4　Worker与领导选举@605
+        9.7.5　运行Driver @607
+        9.7.6　运行Executor @608
+        9.7.7　处理Executor的状态变化 @613
+    9.8　StandaloneAppClient实现 @614
+        9.8.1　ClientEndpoint的实现分析 @615
+        9.8.2　StandaloneAppClient的实现分析 @620
+    9.9　StandaloneSchedulerBackend的实现分析 @621
+        9.9.1　StandaloneSchedulerBackend的属性 @621
+        9.9.2　DriverEndpoint的实现分析 @623
+        9.9.3　StandaloneSchedulerBackend的启动 @628
+        9.9.4　StandaloneSchedulerBackend的停止 @631
+        9.9.5　StandaloneSchedulerBackend与资源分配 @632
+    9.10　CoarseGrainedExecutorBackend详解 @633
+        9.10.1　CoarseGrainedExecutorBackend进程 @634
+        9.10.2　CoarseGrainedExecutorBackend的功能分析 @636
+    9.11　local-cluster部署模式 @639
+        9.11.1　启动本地集群 @639
+        9.11.2　local-cluster部署模式的启动过程 @641
+        9.11.3　local-cluster部署模式下Executor的分配过程 @642
+        9.11.4　local-cluster部署模式下的任务提交执行过程 @643
+    9.12　Standalone部署模式 @645
+        9.12.1　Standalone部署模式的启动过程 @646
+        9.12.2　Standalone部署模式下Executor的分配过程 @648
+        9.12.3　Standalone部署模式的资源回收 @649
+        9.12.4　Standalone部署模式的容错机制 @650
+    9.13　其他部署方案 @653
+        9.13.1　YARN@653
+        9.13.2　Mesos @658
+    9.14　小结 @660
+第10章　Spark API @661
+    10.1　基本概念@662
+    10.2　数据源DataSource @664
+        10.2.1　DataSourceRegister详解 @664
+        10.2.2　DataSource详解 @665
+    10.3　检查点的实现 @669
+        10.3.1　CheckpointRDD的实现@669
+        10.3.2　RDDCheckpointData的实现 @674
+        10.3.3　ReliableRDDCheckpointData的实现 @676
+    10.4　RDD的再次分析 @677
+        10.4.1　转换API @677
+        10.4.2　动作API @679
+        10.4.3　检查点API的实现分析 @681
+        10.4.4　迭代计算 @683
+    10.5　数据集合Dataset @685
+    10.6　DataFrameReader详解 @687
+    10.7　SparkSession详解 @690
+        10.7.1　SparkSession的构建器Builder @690
+        10.7.2　SparkSession的API @693
+    10.8　word count例子 @693
+        10.8.1　Job准备阶段 @694
+        10.8.2　Job的提交与调度 @699
+        10.9　小结 @703
+附录 @704

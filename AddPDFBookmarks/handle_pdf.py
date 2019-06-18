@@ -1,15 +1,16 @@
 # coding:utf-8
 # 添加PDF书签
 from pdf_utils import MyPDFHandler,PDFHandleMode as mode
-import ConfigParser
+# import ConfigParser
+import configparser as ConfigParser # Python3
 import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
+# reload(sys)
+# sys.setdefaultencoding('utf-8')
 
 def main():
     # 从配置文件中读取配置信息
     cf = ConfigParser.SafeConfigParser()
-    cf.read('./info.conf')
+    cf.read('./info2.conf')
     pdf_path = cf.get('info','pdf_path')
     bookmark_file_path = cf.get('info','bookmark_file_path')
     page_offset = cf.getint('info','page_offset')
